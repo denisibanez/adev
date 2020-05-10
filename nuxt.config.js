@@ -13,7 +13,29 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+    ],
+    scripts: [
+      { src: 'js/jquery.js', type: 'text/javascript', body: true },
+      { src: 'js/popper.min.js', type: 'text/javascript', body: true },
+      { src: 'js/bootstrap.min.js', type: 'text/javascript', body: true },
+      { src: 'js/owl.js', type: 'text/javascript', body: true },
+      { src: 'js/wow.js', type: 'text/javascript', body: true },
+      { src: 'js/validation.js', type: 'text/javascript', body: true },
+      { src: 'js/jquery.fancybox.js', type: 'text/javascript', body: true },
+      { src: 'js/appear.js', type: 'text/javascript', body: true },
+      { src: 'js/circle-progress.js', type: 'text/javascript', body: true },
+      { src: 'js/jquery.countTo.js', type: 'text/javascript', body: true },
+      { src: 'js/scrollbar.js', type: 'text/javascript', body: true },
+      { src: 'js/nav-tool.js', type: 'text/javascript', body: true },
+      { src: 'js/jquery.paroller.min.js', type: 'text/javascript', body: true },
+      { src: 'js/tilt.jquery.js', type: 'text/javascript', body: true },
+      { src: 'js/script.js', type: 'text/javascript', body: true },
     ]
+  },
+  webfontloader: {
+    google: {
+      families: ['Ubuntu:300,300i,400,400i,500,500i,700,700i'] //Loads Lato font with weights 400 and 700
+    }
   },
   /*
   ** Customize the progress-bar color
@@ -23,7 +45,24 @@ export default {
   ** Global CSS
   */
   css: [
+   './assets/css/font-awesome-all.css',
+   './assets/css/flaticon.css',
+   './assets/css/bootstrap.css',
+   './assets/css/owl.css',
+   './assets/css/jquery.fancybox.min.css',
+   './assets/css/animate.css',
+   './assets/css/imagebg.css',
+   './assets/css/style.css',
+   './assets/css/responsive.css',
   ],
+  render: {
+    bundleRenderer: {
+      shouldPreload: (file, type) => {
+        return ['script', 'style'].includes(type)
+      }
+      
+    }
+  },
   /*
   ** Plugins to load before mounting the App
   */
@@ -40,6 +79,7 @@ export default {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
+    'nuxt-webfontloader'
   ],
   /*
   ** Axios module configuration
@@ -55,6 +95,24 @@ export default {
     ** You can extend webpack config here
     */
     extend (config, ctx) {
+      [
+        {
+          test: /\.(png|jpe?g|gif|svg|webp)$/,
+          loader: 'url-loader',
+          query: {
+            limit: 1000, // 1kB
+            name: 'img/[name].[hash:7].[ext]'
+          }
+        },
+        {
+          test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+          loader: 'url-loader',
+          query: {
+            limit: 1000, // 1kB
+            name: 'fonts/[name].[hash:7].[ext]'
+          }
+        }
+      ]
     }
   }
 }
